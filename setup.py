@@ -17,6 +17,15 @@ here = path.abspath(path.dirname(__file__))
 with open(path.join(here, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
+# Get all files of templates recursively
+def package_dir(pkg_name, dir_name):
+    pkg_path = path.join(here, pkg_name)
+    dir_path = path.join(pkg_path, dir_name, '**')
+    files = []
+    for entry in glob.glob(dir_path, recursive=True):
+        files.append(entry[len(pkg_path) + 1:])
+    return files
+
 
 setup(
     name='flask_template',
@@ -24,7 +33,7 @@ setup(
     # Versions should comply with PEP440.  For a discussion on single-sourcing
     # the version across setup.py and the project code, see
     # https://packaging.python.org/en/latest/single_source_version.html
-    version='0.1',
+    version='0.3',
 
     description='Flask Project Template',
     long_description=long_description,
@@ -95,7 +104,7 @@ setup(
     # If there are data files included in your packages that need to be
     # installed, specify them here.  If using Python 2.6 or less, then these
     # have to be included in MANIFEST.in as well.
-    #package_data={ 'sample': ['package_data.dat'], },
+    package_data={ 'flask_template': package_dir('flask_template', 'templates'), },
 
     # Although 'package_data' is the preferred approach, in some case you may
     # need to place data files outside of your packages. See:
@@ -112,3 +121,4 @@ setup(
         ],
     },
 )
+

@@ -10,6 +10,7 @@ from proj.config import CONF
 from proj.extensions import db, bcrypt
 from proj.utils import utcnow, json_dumps, random_string, camelcase_to_underscore
 from proj.utils.encrypt import aes
+from proj.utils import ok_jsonify, fail_jsonify
 
 
 class EncryptedType(TypeDecorator):
@@ -53,7 +54,20 @@ class ModelMixin(object):
         return txt
 
 
-class MyModel(db.Model, ModelMixin):
+class TimestampMixin(object):
+    created_at = Column(DateTime, default=utcnow, nullable=False)
+    updated_at = Column(DateTime, default=utcnow, onupdate=utcnow, nullable=False)
+
+
+class MyModel(db.Model, ModelMixin, TimestampMixin):
     __tablename__ = 'my_model'
 
     id = Column(Integer, primary_key=True)
+
+    def to_dict(self):
+        return {
+            'id': self.id
+        }
+
+    def __repr__(self):
+        return '<MyModel(id={})>'.format(self.id)

@@ -14,7 +14,7 @@ def create_app():
 
 
 def register_extensions(app):
-    from admin.extensions import db, migrate
+    from proj.extensions import db, migrate
 
     db.init_app(app)
     migrate.init_app(app=app, db=db)

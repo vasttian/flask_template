@@ -8,7 +8,7 @@ from sqlalchemy.orm import relationship, backref
 
 from proj.config import CONF
 from proj.extensions import db, bcrypt
-from proj.utils import utcnow, json_dumps, random_string, camelcase_to_underscore
+from proj.utils import utcnow, now, json_dumps, random_string, camelcase_to_underscore
 from proj.utils.encrypt import aes
 from proj.utils import ok_jsonify, fail_jsonify
 
@@ -55,8 +55,8 @@ class ModelMixin(object):
 
 
 class TimestampMixin(object):
-    created_at = Column(DateTime, default=utcnow, nullable=False)
-    updated_at = Column(DateTime, default=utcnow, onupdate=utcnow, nullable=False)
+    created_at = Column(DateTime, default=now, nullable=False)
+    updated_at = Column(DateTime, default=now, onupdate=now, nullable=False)
 
 
 class MyModel(db.Model, ModelMixin, TimestampMixin):

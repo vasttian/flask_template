@@ -12,6 +12,10 @@ def utcnow():
     return datetime.datetime.utcnow()
 
 
+def now():
+    return datetime.datetime.now()
+
+
 class JSONEncoder(json.JSONEncoder):
     """Custom JSON encoding class, to handle Decimal and datetime.date instances."""
 

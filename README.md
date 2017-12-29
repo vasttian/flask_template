@@ -18,9 +18,15 @@ will create a flask project directory named after project_name on current path.
 
 # update logs
 
+## 0.4.1
+
+1. modify config.py;
+
+2. format by pycodestyle;
+
 ## 0.4
 
-1. 增加migrations目录，修改默认env.py，在alembic.ini增加alembic:include和alembic:exclude字段支持，以限定alembic
-  默认检测的表;
+1. add migrations directory，modify env.py script to support alembic:include, alembic:exclude 
+options in alembic.ini to limit alembic dectecting tables;
 
-2. 修复一些typo；
+2. fix some typo；

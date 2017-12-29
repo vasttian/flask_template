@@ -3,6 +3,7 @@ from alembic import context
 from sqlalchemy import engine_from_config, pool
 from logging.config import fileConfig
 import logging
+from flask import current_app
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -17,7 +18,6 @@ logger = logging.getLogger('alembic.env')
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
-from flask import current_app
 config.set_main_option('sqlalchemy.url',
                        current_app.config.get('SQLALCHEMY_DATABASE_URI'))
 target_metadata = current_app.extensions['migrate'].db.metadata
@@ -34,7 +34,9 @@ def exclude_tables_from_config(config_):
         return tables_.split(',')
     return
 
-exclude_tables = exclude_tables_from_config(config.get_section('alembic:exclude'))
+
+exclude_tables = exclude_tables_from_config(
+    config.get_section('alembic:exclude'))
 
 
 def include_tables_from_config(config_):
@@ -43,7 +45,9 @@ def include_tables_from_config(config_):
         return tables_.split(',')
     return
 
-include_tables = include_tables_from_config(config.get_section('alembic:include'))
+
+include_tables = include_tables_from_config(
+    config.get_section('alembic:include'))
 
 
 def include_object(object, name, type_, reflected, compare_to):
@@ -112,6 +116,7 @@ def run_migrations_online():
             context.run_migrations()
     finally:
         connection.close()
+
 
 if context.is_offline_mode():
     run_migrations_offline()

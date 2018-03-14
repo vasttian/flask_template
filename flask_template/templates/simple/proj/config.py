@@ -1,6 +1,5 @@
 import logging
 import os
-import datetime
 
 
 class Config(object):
@@ -23,15 +22,27 @@ class DevelopmentConfig(Config):
     SQLALCHEMY_ECHO = True
 
 
+class StagingConfig(Config):
+    DEBUG = True
+
+    SQLALCHEMY_ECHO = True
+
+
 class ProductionConfig(Config):
     LOG_LEVEL = logging.WARNING
 
 
-def get_config_class():
-    env = os.environ.get('proj_env'.upper(), 'dev').lower()
-    if env == 'prod':
-        return ProductionConfig
-    return DevelopmentConfig
+_configs = {
+    'dev': DevelopmentConfig,
+    'staging': StagingConfig,
+    'prod': ProductionConfig
+}
+
+
+def get_config_class(env=None):
+    if not env:
+        env = os.environ.get('proj_env'.upper(), 'dev').lower()
+    return _configs[env]
 
 
 # CONF 是一个全局对象，用于获取配置项。

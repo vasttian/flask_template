@@ -4,7 +4,6 @@ from flask.cli import FlaskGroup, run_command
 
 from proj import create_app, config
 from proj.extensions import db
-from proj.utils import pretty_print
 from proj.cli.shell_ipython import shell_command
 
 

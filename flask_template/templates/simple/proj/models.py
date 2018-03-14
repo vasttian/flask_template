@@ -38,6 +38,14 @@ class ModelMixin(object):
         db.session.add(self)
         db.session.commit()
 
+    def update(self):
+        db.session.merge(self)
+        db.session.commit()
+
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
     def update_dict(self, values, allowed_fields=None):
         if not allowed_fields:
             columns = values.keys()

@@ -10,6 +10,11 @@ from proj.cli.shell_ipython import shell_command
 def create(group):
     app = current_app or create_app()
     group.app = app
+
+    @app.shell_context_processor
+    def shell_context():
+        return {}
+
     return app
 
 
@@ -27,3 +32,4 @@ def resetdb():
 manager.add_command(run_command, 'run')
 manager.add_command(run_command, 'runserver')
 manager.add_command(shell_command, 'shell')
+manager.add_command(MigrateCommand, 'db')
